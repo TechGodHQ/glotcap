@@ -1,0 +1,95 @@
+operations:
+  - name: start_session
+    description: Bounded start_session operation; synthetic provider only.
+    method: POST
+    path: /sessions
+    read: false
+    output_type: Value
+    parameters:
+      - name: format
+        description: Explicit format.
+        type: string
+        required: true
+        location: body
+  - name: append_audio
+    description: Bounded append_audio operation; synthetic provider only.
+    method: POST
+    path: /sessions/{session_id}/audio
+    read: false
+    output_type: Value
+    parameters:
+      - name: session_id
+        description: Explicit session_id.
+        type: string
+        required: true
+        location: path
+      - name: sequence
+        description: Explicit sequence.
+        type: u32
+        required: true
+        location: body
+      - name: data_base64
+        description: Explicit data_base64.
+        type: string
+        required: true
+        location: body
+  - name: finish_session
+    description: Bounded finish_session operation; synthetic provider only.
+    method: POST
+    path: /sessions/{session_id}/finish
+    read: false
+    output_type: Value
+    parameters:
+      - name: session_id
+        description: Explicit session_id.
+        type: string
+        required: true
+        location: path
+  - name: cancel_session
+    description: Bounded cancel_session operation; synthetic provider only.
+    method: POST
+    path: /sessions/{session_id}/cancel
+    read: false
+    output_type: Value
+    parameters:
+      - name: session_id
+        description: Explicit session_id.
+        type: string
+        required: true
+        location: path
+  - name: read_events
+    description: Bounded read_events operation; synthetic provider only.
+    method: GET
+    path: /sessions/{session_id}/events
+    read: true
+    output_type: Value
+    parameters:
+      - name: session_id
+        description: Explicit session_id.
+        type: string
+        required: true
+        location: path
+      - name: after
+        description: Explicit after.
+        type: u32
+        required: true
+        location: query
+  - name: subscribe_events
+    description: Bounded subscribe_events operation; synthetic provider only.
+    method: GET
+    path: /sessions/{session_id}/events/stream
+    read: true
+    output_type: Value
+    delivery: sse
+    surfaces: [http]
+    parameters:
+      - name: session_id
+        description: Explicit session_id.
+        type: string
+        required: true
+        location: path
+      - name: after
+        description: Explicit after.
+        type: u32
+        required: true
+        location: query
