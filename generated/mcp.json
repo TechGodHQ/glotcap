@@ -1,0 +1,124 @@
+{
+  "locations": {
+    "append_audio": {
+      "data_base64": "body",
+      "sequence": "body",
+      "session_id": "path"
+    },
+    "cancel_session": {
+      "session_id": "path"
+    },
+    "finish_session": {
+      "session_id": "path"
+    },
+    "read_events": {
+      "after": "query",
+      "session_id": "path"
+    },
+    "start_session": {
+      "format": "body"
+    }
+  },
+  "tools": [
+    {
+      "description": "Bounded start_session operation; synthetic provider only.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "format": {
+            "description": "Explicit format.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "format"
+        ],
+        "type": "object"
+      },
+      "name": "start_session"
+    },
+    {
+      "description": "Bounded append_audio operation; synthetic provider only.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "data_base64": {
+            "description": "Explicit data_base64.",
+            "type": "string"
+          },
+          "sequence": {
+            "description": "Explicit sequence.",
+            "type": "integer"
+          },
+          "session_id": {
+            "description": "Explicit session_id.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "session_id",
+          "sequence",
+          "data_base64"
+        ],
+        "type": "object"
+      },
+      "name": "append_audio"
+    },
+    {
+      "description": "Bounded finish_session operation; synthetic provider only.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "session_id": {
+            "description": "Explicit session_id.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "session_id"
+        ],
+        "type": "object"
+      },
+      "name": "finish_session"
+    },
+    {
+      "description": "Bounded cancel_session operation; synthetic provider only.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "session_id": {
+            "description": "Explicit session_id.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "session_id"
+        ],
+        "type": "object"
+      },
+      "name": "cancel_session"
+    },
+    {
+      "description": "Bounded read_events operation; synthetic provider only.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "after": {
+            "description": "Explicit after.",
+            "type": "integer"
+          },
+          "session_id": {
+            "description": "Explicit session_id.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "session_id",
+          "after"
+        ],
+        "type": "object"
+      },
+      "name": "read_events"
+    }
+  ]
+}

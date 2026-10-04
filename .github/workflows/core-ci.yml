@@ -1,0 +1,45 @@
+name: Core CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: core-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  core:
+    name: Rust quality and Hydra freshness
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Check out core
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install pinned Rust toolchain
+        run: rustup toolchain install 1.93.1 --profile minimal --component clippy --component rustfmt
+      - name: Check formatting
+        run: cargo fmt --all -- --check
+      - name: Check lints
+        run: cargo clippy --locked --workspace --all-targets -- -D warnings
+      - name: Build workspace
+        run: cargo build --locked --workspace --all-targets
+      - name: Test workspace and documentation
+        run: cargo test --locked --workspace
+      - name: Check out the exact generator used for this API
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: TechGodHQ/hydra
+          ref: 303ba7af54b2c54752c59c1e3a60828290f79e75
+          path: .hydra-ci
+          persist-credentials: false
+      - name: Build pinned Hydra generator
+        run: cargo build --locked --manifest-path .hydra-ci/Cargo.toml -p hydra-codegen --bin hydra-codegen
+      - name: Verify committed generated artifacts
+        run: .hydra-ci/target/debug/hydra-codegen check

@@ -1,0 +1,4 @@
+http_dispatch_fn: "crate::http_dispatch"
+http_state_type: "crate::AppState"
+sse_binding_prefix: "super::"
+ts_client_name: "GlotcapClient"
